@@ -1,16 +1,17 @@
-import Raghunandan from '../assets/Team/Raghunandan.png';
-import Rajan from '../assets/Team/Rajan.png';
-import Mayilvelnathan from '../assets/Team/Mayilvelnathan.png';
-import Badri from '../assets/Team/Badri.png';
-import Abhilash from '../assets/Team/Abhilash.png';
-import RajeshMehta from '../assets/Team/RajeshMehta.png';
-import Sivaraman from '../assets/Team/Sivaraman.png';
-import Suryanarayana from '../assets/Team/Suryanarayana.png';
-import Soundararajan from '../assets/Team/Soundararajan.png';
-import AnilTrigunayat from '../assets/Team/AnilTrigunayat.png';
-import EvanL from '../assets/Team/EvanL.png';
-import PriyankShah from '../assets/Team/PriyankShah.png';
-import Sridhar from '../assets/Team/Sridhar.png';
+import Raghunandan from '../assets/Team/Raghunandan.jpg';
+import Rajan from '../assets/Team/Rajan.jpg';
+import Mayilvelnathan from '../assets/Team/Mayilvelnathan.jpg';
+import Badri from '../assets/Team/Badri.jpg';
+import Abhilash from '../assets/Team/Abhilash.jpg';
+import RajeshMehta from '../assets/Team/RajeshMehta.jpg';
+import Sivaraman from '../assets/Team/Sivaraman.jpg';
+import Suryanarayana from '../assets/Team/Suryanarayana.jpg';
+import Soundararajan from '../assets/Team/Soundararajan.jpg';
+import RajaRathanam from '../assets/Team/RajaRathanam.jpg';
+import AyushRanjan from '../assets/Team/AyushRanjan.jpg';
+import EvanL from '../assets/Team/EvanL.jpg';
+import PriyankShah from '../assets/Team/PriyankShah.jpg';
+import Sridhar from '../assets/Team/Sridhar.jpg';
 
 /* ---------------------------------------------------------------------------
  * Team
@@ -26,6 +27,8 @@ export type TeamMember = {
   bio: string;
   image: string;
   linkedin?: string;
+  /** Work address. Rendered as a mail button beside the LinkedIn link. */
+  email?: string;
 };
 
 export const directors: TeamMember[] = [
@@ -36,6 +39,7 @@ export const directors: TeamMember[] = [
     bio: 'Strategic adviser and catalyst for Indian and global businesses. Associated with businesses across multiple domains and with chambers of trade, he operates across renewables, trade finance, business development and cross-border partnerships.',
     image: Raghunandan,
     linkedin: 'https://www.linkedin.com/in/raghunandan-akur-raman-979a35b',
+    email: 'raghunandan.ar@poornaglobalstrategies.com',
   },
   {
     id: 'badri-narayanan-gopalakrishnan',
@@ -44,6 +48,7 @@ export const directors: TeamMember[] = [
     bio: 'An economist and strategy leader with a quarter century of global multisectoral experience across academia, industry, startups, nonprofits and policy work with governments and international organisations. His firm, Infisum Modelling, is part of GTAP alongside the World Bank and IMF. He has supported more than 20 countries in formulating policy and has worked with organisations including Amazon, Google and Microsoft.',
     image: Badri,
     linkedin: 'https://www.linkedin.com/in/badrinarayanang',
+    email: 'badri@poornaglobalstrategies.com',
   },
   {
     id: 'mayilvelnathan-vivekananthan',
@@ -59,6 +64,7 @@ export const directors: TeamMember[] = [
     focus: 'Healthcare & life sciences',
     bio: 'A Stanford alumnus with over 20 years of global leadership in healthcare and life sciences, holding 20+ patents in cardiac and digital health. He heads the Healthcare & Life Sciences practice at YASH Technologies, and his career spans leadership roles at CallHealth, AliveCor and Medtronic, where he worked on sensor-based heart failure programmes and remote care.',
     image: Rajan,
+    email: 'rajan@poornaglobalstrategies.com',
   },
 ];
 
@@ -104,14 +110,6 @@ export const advisors: TeamMember[] = [
     linkedin: 'https://www.linkedin.com/in/soundararajan-ramaswamy-646a3545',
   },
   {
-    id: 'anil-trigunayat',
-    name: 'Anil Trigunayat',
-    focus: 'Diplomacy & strategic analysis',
-    bio: 'A diplomat with over three decades of experience in public diplomacy, strategic analysis and economic engagement. Former Indian Ambassador to Jordan, Libya and Malta, with expertise in conflict management and international relations. He serves as Independent Director at NTPC Ltd and holds positions in international organisations and think tanks.',
-    image: AnilTrigunayat,
-    linkedin: 'https://www.linkedin.com/in/ambaniltrigunayat',
-  },
-  {
     id: 'evan-l',
     name: 'Evan L',
     focus: 'Asset management & private equity',
@@ -134,6 +132,23 @@ export const advisors: TeamMember[] = [
     bio: 'An academic leader and IT expert with over 40 years in education and 30 years in industry and R&D. A PhD from JNU, he has served as Vice Chancellor at major universities and collaborated with Dr. A. P. J. Abdul Kalam. He has managed large-scale IT and R&D projects for international organisations, authored 10 books, published 332 research papers and guided 20 PhD scholars.',
     image: Sridhar,
     linkedin: 'https://www.linkedin.com/in/dr-ssridhar-6a81a5163',
+  },
+  {
+    // TODO: replace the placeholder portrait, focus and bio once received.
+    id: 'dr-raja-rathanam',
+    name: 'Dr. Raja Rathanam',
+    focus: 'Mentor & adviser',
+    bio: 'Dr. Raja Rathanam joins the Poorna Global Strategies mentor and advisory group. A full profile will follow shortly.',
+    image: RajaRathanam,
+  },
+  {
+    id: 'ayush-ranjan',
+    name: 'Ayush Ranjan',
+    focus: 'AI, technology & product strategy',
+    bio: 'A founder and technologist building AI-driven platforms. He is co-founder and CEO of SlateMate, an AI platform for child digital safety and well-being, and co-founder and COO of DubCall, an AI voice-agent platform for Indian businesses. He studies Data Science and Applications at IIT Madras and is a fellow of Harvard\'s Aspire Leadership Program.',
+    image: AyushRanjan,
+    linkedin: 'https://www.linkedin.com/in/ayushranjan636/',
+    email: 'ayush@poornaglobalstrategies.com',
   },
 ];
 

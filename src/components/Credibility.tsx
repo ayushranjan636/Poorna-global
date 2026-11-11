@@ -4,17 +4,18 @@ import { useReveal } from './ui/useReveal';
 
 import Infisum from '../assets/Partnerships/Infisum.png';
 import SWIndia from '../assets/Partnerships/SWIndia.png';
-import SchoolOfSustainability from '../assets/Partnerships/SchoolOfSustainability.png';
 import Airoi from '../assets/Partnerships/Airoi.png';
 
 /* ---------------------------------------------------------------------------
  * Credibility
- * Two verified signals, presented plainly:
+ * Three verified signals, presented plainly:
  *  1. Named institutional partners, with their own logos and websites.
- *  2. Regional press coverage of a pilot project the firm was party to.
+ *  2. Academic institutions the firm's research and modelling work draws on.
+ *  3. Regional press coverage of a pilot project the firm was party to.
  *
- * No testimonials or client logos are shown, because none are substantiated
- * in the firm's existing material.
+ * No testimonials are shown, because none are substantiated in the firm's
+ * existing material. Client and partner names live on the Projects page,
+ * drawn from `organisationGroups`.
  * ------------------------------------------------------------------------- */
 
 const partners = [
@@ -31,17 +32,21 @@ const partners = [
     href: 'https://www.sw-india.com',
   },
   {
-    name: 'School of Sustainability, IIT Madras',
-    logo: SchoolOfSustainability,
-    note: 'Sustainability research collaboration',
-    href: 'https://sos.iitm.ac.in',
-  },
-  {
     name: 'AIROI, Inc',
     logo: Airoi,
     note: 'Climate tech, carbon and ESG analytics',
     href: 'https://www.airoi.com',
   },
+];
+
+/* Academic institutions. Set as a typographic list rather than a logo wall:
+   we do not hold permission to reproduce institutional marks, and the names
+   carry more weight than low-resolution crests would. */
+const institutions = [
+  { name: 'IIT Madras', href: 'https://www.iitm.ac.in' },
+  { name: 'IIT Bombay', href: 'https://www.iitb.ac.in' },
+  { name: 'IIT Delhi', href: 'https://home.iitd.ac.in' },
+  { name: 'Madras School of Economics', href: 'https://www.mse.ac.in' },
 ];
 
 const clippings = [
@@ -69,7 +74,7 @@ export default function Credibility() {
         </div>
 
         {/* Partners */}
-        <ul className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2 lg:grid-cols-3">
           {partners.map((partner, index) => (
             <Reveal as="li" key={partner.name} delay={index * 60} className="bg-white">
               <a
@@ -97,6 +102,32 @@ export default function Credibility() {
             </Reveal>
           ))}
         </ul>
+
+        {/* Academic & research institutions */}
+        <div className="mt-14 rounded-[var(--radius-md)] border border-[var(--color-line)] bg-[var(--color-mist)] p-7 sm:p-9">
+          <h3 className="text-[0.8125rem] font-medium uppercase tracking-[0.1em] text-[var(--color-muted)]">
+            Academic & research institutions
+          </h3>
+          <p className="mt-3 max-w-2xl text-[0.9375rem] leading-relaxed text-[var(--color-ink-soft)]">
+            Our modelling, policy and technology-transfer work is carried out with faculty and
+            research groups across multiple Indian Institutes of Technology and leading
+            economics institutions.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2.5">
+            {institutions.map((institution) => (
+              <li key={institution.name}>
+                <a
+                  href={institution.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-[var(--radius-sm)] border border-[var(--color-line-strong)] bg-white px-3.5 py-2 text-[0.9375rem] text-[var(--color-ink)] transition-colors hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
+                >
+                  {institution.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         {/* Press coverage */}
         <div

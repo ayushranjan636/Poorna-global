@@ -7,11 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "tsx scripts/test-enquiry.ts",
+    "test:webhook": "tsx scripts/test-enquiry.ts --webhook"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.9",
     "axios": "^1.8.4",
+    "nodemailer": "^10.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

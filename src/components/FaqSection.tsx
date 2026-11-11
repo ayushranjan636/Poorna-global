@@ -32,7 +32,7 @@ const faqs = [
     id: 'international',
     question: 'How do you support international expansion?',
     answer:
-      'Through cross-border transactions, technology transfer and investment structuring. Our advisory group includes former ambassadors and trade specialists with direct experience of the regulatory and cultural context in the markets concerned.',
+      'Through cross-border transactions, technology transfer and investment structuring. Our advisory group includes a former Indian Foreign Service diplomat and trade specialists with direct experience of the regulatory and cultural context in the markets concerned.',
   },
   {
     id: 'evidence',

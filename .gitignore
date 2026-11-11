@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Environment / secrets. `.env.example` is the committed template.
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

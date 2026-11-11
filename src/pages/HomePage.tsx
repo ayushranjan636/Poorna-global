@@ -6,6 +6,7 @@ import Approach from '../components/Approach';
 import SelectedProjects from '../components/SelectedProjects';
 import WhyUs from '../components/WhyUs';
 import Credibility from '../components/Credibility';
+import Organisations from '../components/Organisations';
 import FaqSection from '../components/FaqSection';
 import CTASection from '../components/CTASection';
 import { usePageMeta } from '../lib/usePageMeta';
@@ -27,6 +28,7 @@ export default function HomePage() {
       <SelectedProjects />
       <WhyUs />
       <Credibility />
+      <Organisations />
       <FaqSection />
       <CTASection />
     </>

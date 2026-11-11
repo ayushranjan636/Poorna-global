@@ -13,6 +13,7 @@ export const company = {
   legalName: 'Poorna Global Strategies Pvt Ltd',
   shortName: 'PGSPL',
   tagline: 'Strategy, partnerships and delivery across borders.',
+  email: 'raghunandan.ar@poornaglobalstrategies.com',
   linkedin: 'https://www.linkedin.com/company/poorna-global-strategies',
 } as const;
 
@@ -146,14 +147,28 @@ export type Sector = {
 
 export const sectors: Sector[] = [
   {
+    id: 'hydrogen-energy',
+    teaser: 'Electrolysers, green ammonia and offtake.',
+    title: 'Hydrogen Energy',
+    summary:
+      'Green hydrogen and its derivatives sit at the intersection of electrolyser technology, certification, offtake and project finance. We advise across that whole chain, from feasibility through to bankable structure.',
+    focus: [
+      'Green hydrogen & green ammonia projects',
+      'Electrolyser technology selection & transfer',
+      'Certification, standards & compliance',
+      'Offtake agreements & market intelligence',
+      'Hydrogen policy & national roadmaps',
+    ],
+  },
+  {
     id: 'green-energy',
-    teaser: 'Hydrogen, solar, storage and the policy around them.',
+    teaser: 'Solar, storage and the policy around them.',
     title: 'Green Energy',
     summary:
       'We work across the energy value chain in the transition to clean, secure and sustainable systems — bridging innovation, policy and investment.',
     focus: [
-      'Green hydrogen & ammonia',
       'Renewable energy strategy',
+      'Solar & BESS advisory',
       'Energy storage & grid modernization',
       'Policy, regulation & energy markets',
       'Sustainable finance & investment facilitation',
@@ -230,10 +245,78 @@ export const sectors: Sector[] = [
   },
 ];
 
+/* --- Organisations ---------------------------------------------------------
+ * Partners, collaborators and clients, as supplied by the business.
+ *
+ * Three deliberately distinct relationships:
+ *   partners      — organisations we deliver alongside
+ *   collaborators — institutions we work with on research and programmes
+ *   clients       — organisations we have delivered for
+ *
+ * `href` is present only where a website was supplied; names without one are
+ * rendered as plain text rather than as dead links.
+ * ------------------------------------------------------------------------ */
+
+export type Organisation = {
+  name: string;
+  href?: string;
+};
+
+export type OrganisationGroup = {
+  id: string;
+  heading: string;
+  blurb: string;
+  items: Organisation[];
+};
+
+export const organisationGroups: OrganisationGroup[] = [
+  {
+    id: 'partners',
+    heading: 'Partners',
+    blurb: 'Organisations we deliver alongside on client and government mandates.',
+    items: [
+      { name: 'Schoolnet Group', href: 'https://www.schoolnetindia.com' },
+      { name: 'LearnNet' },
+      { name: 'Rasha Management' },
+      { name: 'Plancked' },
+      { name: 'Saiba Lab' },
+    ],
+  },
+  {
+    id: 'collaborators',
+    heading: 'Collaborators',
+    blurb:
+      'Research, modelling and industry institutions we work with on policy and technical programmes.',
+    items: [
+      { name: 'Saibar Lab' },
+      { name: 'MIICCIA' },
+      { name: 'Infinite Sum Modelling', href: 'https://infisum.com' },
+      { name: 'Rasam MRC', href: 'https://www.rasamrc.com/' },
+      { name: 'Scope Nexum', href: 'https://www.nexumenergy.ai/en/home/' },
+      { name: 'IMS Holdings', href: 'https://imsholdings.lk/' },
+    ],
+  },
+  {
+    id: 'clients',
+    heading: 'Clients',
+    blurb: 'Organisations we have delivered strategy, transaction and policy work for.',
+    items: [
+      { name: 'Krishna Milk Union' },
+      { name: 'Nikhil Singhi Financial Services' },
+      { name: 'Clear Robotics' },
+      { name: 'Golden Agri Resources Pvt. Ltd.' },
+      { name: 'Rasam MRC', href: 'https://www.rasamrc.com/' },
+      { name: 'Ucchvas', href: 'https://ucchvas.com/' },
+      { name: 'Agastya H2', href: 'https://agastyah2.com/' },
+      { name: 'Rapid EV Charge', href: 'https://www.rapidevcharge.com/about-us/' },
+      { name: 'AIROI, Inc', href: 'https://www.airoi.com/#home' },
+    ],
+  },
+];
+
 /* --- Approach -------------------------------------------------------------
  * Presented as how we work, not as a certified methodology.
  * ------------------------------------------------------------------------ */
-
 export const approach = [
   {
     step: '01',
@@ -413,7 +496,7 @@ export const invitations: Record<string, Invitation> = {
 export const strengths = [
   {
     title: 'Senior people do the work',
-    body: 'Our directors and advisory group include former ambassadors, a retired senior banker, an IIM Ahmedabad and Siemens veteran, and an economist whose modelling firm sits within GTAP alongside the World Bank and IMF.',
+    body: 'Our directors and advisory group include a former Indian Foreign Service diplomat, a retired senior banker, an IIM Ahmedabad and Siemens veteran, and an economist whose modelling firm sits within GTAP alongside the World Bank and IMF.',
   },
   {
     title: 'Access on both sides of the table',

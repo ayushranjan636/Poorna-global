@@ -2,6 +2,7 @@ import { Container, Section } from '../../components/ui/Layout';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { ProjectCard } from '../../components/SelectedProjects';
 import CTASection from '../../components/CTASection';
+import Organisations from '../../components/Organisations';
 import { Reveal } from '../../components/ui/Reveal';
 import { projects } from '../../content/site';
 import { usePageMeta } from '../../lib/usePageMeta';
@@ -50,6 +51,8 @@ export default function ProjectsPage() {
           </p>
         </Container>
       </Section>
+
+      <Organisations />
 
       <CTASection variant="projects" />
     </>

@@ -115,7 +115,7 @@ export default function AboutPage() {
               Senior practitioners, not a pyramid
             </h2>
             <p className="lead mt-5">
-              Thirteen directors and advisers — former ambassadors, a retired senior banker,
+              Fourteen directors and advisers — a former Consul General, a retired senior banker,
               an economist inside the GTAP network, and operators from Siemens, Medtronic and
               AkzoNobel.{' '}
               <span className="hidden md:inline text-[var(--color-ink-soft)]">

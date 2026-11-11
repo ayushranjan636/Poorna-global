@@ -1,6 +1,6 @@
-import Raghunandan from '../assets/Team/Raghunandan.png';
-import Abhilash from '../assets/Team/Abhilash.png';
-import Mayilvelnathan from '../assets/Team/Mayilvelnathan.png';
+import Raghunandan from '../assets/Team/Raghunandan.jpg';
+import Abhilash from '../assets/Team/Abhilash.jpg';
+import Mayilvelnathan from '../assets/Team/Mayilvelnathan.jpg';
 
 /* ---------------------------------------------------------------------------
  * Insights

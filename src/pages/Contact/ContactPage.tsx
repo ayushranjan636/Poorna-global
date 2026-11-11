@@ -11,18 +11,18 @@ import { usePageMeta } from '../../lib/usePageMeta';
  * ContactPage
  *
  * Submission behaviour, in order of preference:
- *   1. POST to VITE_CONTACT_ENDPOINT when configured.
- *   2. Otherwise open the visitor's mail client via VITE_CONTACT_EMAIL.
- *   3. If neither is configured, the form is disabled and we say so, and point
- *      to LinkedIn instead.
+ *   1. POST to the enquiry API, which records the message to a Google Sheet
+ *      and emails the team. Defaults to the bundled /api/enquiry function;
+ *      override with VITE_CONTACT_ENDPOINT if it lives elsewhere.
+ *   2. Fall back to the visitor's mail client via VITE_CONTACT_EMAIL.
  *
- * Success is only ever reported when a submission genuinely succeeded. The
- * previous implementation POSTed to a route that does not exist; because the
+ * Success is only ever reported when a submission genuinely succeeded. An
+ * earlier implementation POSTed to a route that did not exist; because the
  * SPA rewrite returns index.html with a 200, it reported success every time.
  * We now verify the response is actually JSON before trusting it.
  * ------------------------------------------------------------------------- */
 
-const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined;
+const ENDPOINT = (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) || '/api/enquiry';
 const EMAIL = import.meta.env.VITE_CONTACT_EMAIL as string | undefined;
 
 type Status =
@@ -145,7 +145,6 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>({ state: 'idle' });
 
-  const configured = Boolean(ENDPOINT || EMAIL);
   const reveal = useReveal<HTMLDivElement>();
 
   const update = (name: keyof Fields, value: string) => {
@@ -164,20 +163,31 @@ export default function ContactPage() {
       return;
     }
 
-    /* Route 1 — a configured backend endpoint. */
+    /* Route 1 — the enquiry API: records to the sheet and emails the team. */
     if (ENDPOINT) {
       setStatus({ state: 'submitting' });
 
       try {
         const response = await axios.post(ENDPOINT, values, {
           headers: { 'Content-Type': 'application/json' },
+          /* Handle non-2xx ourselves so we can surface the server's message. */
+          validateStatus: () => true,
         });
 
         /* An SPA rewrite can return index.html with a 200. Only treat the
            submission as delivered if the endpoint answered with JSON. */
         const contentType = String(response.headers['content-type'] ?? '');
         if (!contentType.includes('application/json')) {
-          throw new Error('Unexpected response from the contact endpoint.');
+          throw new Error('The contact endpoint is not available.');
+        }
+
+        if (response.status >= 400) {
+          /* A 400 is a validation message worth showing verbatim. */
+          throw new Error(
+            typeof response.data?.error === 'string'
+              ? response.data.error
+              : 'That message could not be sent.',
+          );
         }
 
         setStatus({
@@ -185,12 +195,13 @@ export default function ContactPage() {
           message: 'Thank you — your message has been sent. We will come back to you shortly.',
         });
         setValues({ name: '', email: '', organisation: '', message: '' });
-      } catch {
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : '';
         setStatus({
           state: 'error',
           message: EMAIL
-            ? `We could not send that message. Please email us directly at ${EMAIL}.`
-            : 'We could not send that message. Please try again, or reach us on LinkedIn.',
+            ? `${detail} Please email us directly at ${EMAIL}.`.trim()
+            : `${detail} Please try again, or reach us on LinkedIn.`.trim(),
         });
       }
       return;
@@ -295,27 +306,9 @@ export default function ContactPage() {
                   )}
                 </div>
 
-                {configured ? (
-                  <Button type="submit" size="lg" disabled={submitting} withArrow={!submitting}>
-                    {submitting ? 'Sending…' : 'Send message'}
-                  </Button>
-                ) : (
-                  /* No submission route is configured in this environment. We say
-                     so plainly rather than pretending the message was sent. */
-                  <div className="rounded-[var(--radius-sm)] border border-[var(--color-line-strong)] bg-[var(--color-mist)] px-4 py-4">
-                    <p className="text-[0.9375rem] text-[var(--color-ink)]">
-                      This form is not yet connected to a mailbox.
-                    </p>
-                    <p className="mt-1.5 text-[0.875rem] leading-relaxed text-[var(--color-muted)]">
-                      Set <code className="text-[var(--color-ink)]">VITE_CONTACT_EMAIL</code> or{' '}
-                      <code className="text-[var(--color-ink)]">VITE_CONTACT_ENDPOINT</code> to
-                      enable it. In the meantime, please reach us on LinkedIn.
-                    </p>
-                    <div className="mt-3">
-                      <TextLink href={company.linkedin}>Message us on LinkedIn</TextLink>
-                    </div>
-                  </div>
-                )}
+                <Button type="submit" size="lg" disabled={submitting} withArrow={!submitting}>
+                  {submitting ? 'Sending…' : 'Send message'}
+                </Button>
               </form>
             </div>
 
@@ -339,6 +332,16 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ol>
+              </div>
+
+              <div className="mt-7 border-t border-[var(--color-line-strong)] pt-7">
+                <h2 className="heading-sm">Direct</h2>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--color-muted)]">
+                  If you would rather write to us yourself:
+                </p>
+                <div className="mt-3">
+                  <TextLink href={`mailto:${company.email}`}>{company.email}</TextLink>
+                </div>
               </div>
 
               <div className="mt-7 border-t border-[var(--color-line-strong)] pt-7">

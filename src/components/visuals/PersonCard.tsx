@@ -24,6 +24,28 @@ function LinkedInIcon() {
   );
 }
 
+function MailIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4"
+    >
+      <rect x="2.75" y="4.75" width="18.5" height="14.5" rx="2.5" />
+      <path d="m3.5 7.5 7.24 5.1a2.2 2.2 0 0 0 2.52 0L20.5 7.5" />
+    </svg>
+  );
+}
+
+/* Shared styling for the two actions in the revealed panel. */
+const actionClass =
+  'inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-white/70 bg-white/60 px-3 py-1.5 text-[0.8125rem] font-medium text-[var(--color-ink)] transition-colors hover:bg-white/90 hover:text-[var(--color-accent)]';
+
 export default function PersonCard({
   member,
   index = 0,
@@ -97,17 +119,30 @@ export default function PersonCard({
           {member.bio}
         </p>
 
-        {member.linkedin && (
-          <a
-            href={member.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex w-fit items-center gap-2 rounded-[var(--radius-sm)] border border-white/70 bg-white/60 px-3 py-1.5 text-[0.8125rem] font-medium text-[var(--color-ink)] transition-colors hover:bg-white/90 hover:text-[var(--color-accent)]"
-          >
-            <LinkedInIcon />
-            LinkedIn
-            <span className="sr-only"> profile for {member.name} (opens in a new tab)</span>
-          </a>
+        {/* Actions — LinkedIn and a direct mail button, side by side. */}
+        {(member.linkedin || member.email) && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            {member.linkedin && (
+              <a
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={actionClass}
+              >
+                <LinkedInIcon />
+                LinkedIn
+                <span className="sr-only"> profile for {member.name} (opens in a new tab)</span>
+              </a>
+            )}
+
+            {member.email && (
+              <a href={`mailto:${member.email}`} className={actionClass}>
+                <MailIcon />
+                Email
+                <span className="sr-only"> {member.name} at {member.email}</span>
+              </a>
+            )}
+          </div>
         )}
       </div>
     </article>
