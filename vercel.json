@@ -1,7 +1,6 @@
 {
   "rewrites": [
     {
-      "comment": "Serve the SPA for client-side routes, but never for /api/*. Without the negative lookahead a serverless route can be swallowed by this rewrite and answer with index.html and a 200, which looks like success to a form POST.",
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

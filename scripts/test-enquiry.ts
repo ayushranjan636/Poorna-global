@@ -403,6 +403,48 @@ async function main() {
     'text/plain should not be HTML-escaped; readers would see &lt;script&gt;',
   );
 
+  /* --- Deployment config ------------------------------------------------ */
+  group('vercel.json');
+
+  const { readFileSync } = await import('node:fs');
+  let vercel: Record<string, unknown> = {};
+  try {
+    vercel = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+    check('is valid JSON', true);
+  } catch (error) {
+    check('is valid JSON', false, String(error));
+  }
+
+  /* Vercel rejects unknown properties outright and the whole build fails, so
+     validate the keys here rather than discovering it in a deploy log. */
+  const ALLOWED_REWRITE_KEYS = ['source', 'destination', 'has', 'missing', 'statusCode'];
+  const rewrites = (vercel.rewrites ?? []) as Array<Record<string, unknown>>;
+
+  check('declares at least one rewrite', rewrites.length > 0);
+  for (const [i, rule] of rewrites.entries()) {
+    const unknown = Object.keys(rule).filter((k) => !ALLOWED_REWRITE_KEYS.includes(k));
+    check(
+      `rewrites[${i}] uses only properties Vercel accepts`,
+      unknown.length === 0,
+      unknown.length ? `unsupported: ${unknown.join(', ')} — the build will fail` : '',
+    );
+  }
+
+  /* The SPA catch-all must not swallow the serverless function: a POST would
+     then receive index.html with a 200 and look like a delivered enquiry. */
+  const spaRule = rewrites.find((r) => r.destination === '/index.html');
+  check('has a SPA catch-all to /index.html', Boolean(spaRule));
+  if (spaRule) {
+    const pattern = new RegExp(`^${String(spaRule.source)}$`);
+    check('rewrites / to the SPA', pattern.test('/'));
+    check('rewrites deep links to the SPA', pattern.test('/projects/example'));
+    check(
+      'does NOT rewrite /api/enquiry',
+      !pattern.test('/api/enquiry'),
+      'the enquiry function would be shadowed by index.html in production',
+    );
+  }
+
   /* --- Optional: the real webhook --------------------------------------- */
   if (process.argv.includes('--webhook')) {
     group('Live Google Sheet webhook');

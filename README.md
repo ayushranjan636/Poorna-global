@@ -57,5 +57,28 @@ Generated assets in `public/brand/` are raster, derived from the source artwork 
 
 ## Deployment
 
-Configured for Vercel via `vercel.json`, which rewrites all paths to `index.html`
-so client-side routing works on refresh.
+Deployed on Vercel.
+
+`vercel.json` rewrites client-side routes to `index.html` so the SPA survives a
+refresh. The pattern is `/((?!api/).*)` — the negative lookahead matters: a
+plain `/(.*)` catch-all also captures `/api/*`, so a form POST would receive
+`index.html` with a `200` and be indistinguishable from a delivered enquiry.
+
+Note that `vercel.json` permits no extra properties (not even a `comment` key)
+and JSON has no comment syntax, so the reasoning lives here instead. `npm test`
+validates the file against the keys Vercel accepts.
+
+### Environment variables
+
+Set the keys from `.env.example` in the Vercel project. Values in `.env.local`
+are for local development only and are not deployed.
+
+## Testing
+
+```bash
+npm test             # 44 tests, hermetic: no network, no email sent
+npm run test:webhook # also appends a real row to the live Google Sheet
+```
+
+The default run stubs SMTP and the sheet webhook locally, so it is safe to run
+repeatedly. `test:webhook` is opt-in because it writes to the real sheet.
